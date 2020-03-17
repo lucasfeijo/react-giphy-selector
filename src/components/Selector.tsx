@@ -148,6 +148,10 @@ export class Selector extends React.Component<ISelectorProps, ISelectorState> {
       });
   }
 
+  public performQuery(query: string): void {
+    this.setState({ query });
+  }
+
   /**
    * Fired when a suggestion has been selected
    */
