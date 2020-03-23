@@ -63,6 +63,9 @@ export interface ISelectorState {
 }
 
 export class Selector extends React.Component<ISelectorProps, ISelectorState> {
+  private form: QueryForm
+  private setFormRef: (QueryForm) => void
+
   public static defaultProps: Partial<ISelectorProps> = {
     rating: Rating.G,
     sort: ResultSort.Relevant,
@@ -101,6 +104,9 @@ export class Selector extends React.Component<ISelectorProps, ISelectorState> {
     this.onQueryChange = this.onQueryChange.bind(this);
     this.onQueryExecute = this.onQueryExecute.bind(this);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.setFormRef = element => {
+      this.form = element;
+    }
   }
 
   /**
@@ -150,6 +156,7 @@ export class Selector extends React.Component<ISelectorProps, ISelectorState> {
 
   public performQuery(query: string): void {
     this.setState({ query });
+    this.form.onSubmit({});
   }
 
   /**
@@ -207,6 +214,7 @@ export class Selector extends React.Component<ISelectorProps, ISelectorState> {
     return (
       <div>
         <QueryForm
+          ref={this.setFormRef}
           queryInputPlaceholder={queryInputPlaceholder}
           onQueryChange={this.onQueryChange}
           onQueryExecute={this.onQueryExecute}
